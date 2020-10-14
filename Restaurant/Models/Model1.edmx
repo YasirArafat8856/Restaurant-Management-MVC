@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MVC_RestaurantModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Order_Id" Type="int" />
+          <Property Name="Total_Price" Type="money" />
+          <Property Name="Payment_Method" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cus_Name" Type="varchar" MaxLength="30" />
+          <Property Name="Cus_Address" Type="varchar" MaxLength="50" />
+          <Property Name="Cus_Contact_NO" Type="varchar" MaxLength="20" />
+          <Property Name="Cus_Email" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Food_Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cus_Id" Type="int" />
+          <Property Name="Item_Id" Type="int" />
+          <Property Name="OrderDate" Type="date" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Total_Price" Type="money" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Item_Name" Type="varchar" MaxLength="30" />
+          <Property Name="Unit_Price" Type="money" />
+          <Property Name="Picture" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="FK__Bill__Order_Id__2B3F6F97">
+          <End Role="Food_Order" Type="Self.Food_Order" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food_Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Order_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Food_Orde__Cus_I__276EDEB3">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Food_Order" Type="Self.Food_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Food_Order">
+              <PropertyRef Name="Cus_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Food_Orde__Item___286302EC">
+          <End Role="Item" Type="Self.Item" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Food_Order" Type="Self.Food_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Food_Order">
+              <PropertyRef Name="Item_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Sp_ins_order" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CusId" Type="int" Mode="In" />
+          <Parameter Name="ItemId" Type="int" Mode="In" />
+          <Parameter Name="Quantity" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Sp_insBill" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ordId" Type="int" Mode="In" />
+          <Parameter Name="PayMath" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="MVC_RestaurantModelStoreContainer">
+          <EntitySet Name="Bill" EntityType="Self.Bill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Food_Order" EntityType="Self.Food_Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Bill__Order_Id__2B3F6F97" Association="Self.FK__Bill__Order_Id__2B3F6F97">
+            <End Role="Food_Order" EntitySet="Food_Order" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Food_Orde__Cus_I__276EDEB3" Association="Self.FK__Food_Orde__Cus_I__276EDEB3">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Food_Order" EntitySet="Food_Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Food_Orde__Item___286302EC" Association="Self.FK__Food_Orde__Item___286302EC">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Food_Order" EntitySet="Food_Order" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MVC_RestaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Order_Id" Type="Int32" />
+          <Property Name="Total_Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Payment_Method" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Food_Order" Relationship="Self.FK__Bill__Order_Id__2B3F6F97" FromRole="Bill" ToRole="Food_Order" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cus_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Cus_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cus_Contact_NO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Cus_Email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Food_Order" Relationship="Self.FK__Food_Orde__Cus_I__276EDEB3" FromRole="Customer" ToRole="Food_Order" />
+        </EntityType>
+        <EntityType Name="Food_Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cus_Id" Type="Int32" />
+          <Property Name="Item_Id" Type="Int32" />
+          <Property Name="OrderDate" Type="DateTime" Precision="0" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Total_Price" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK__Bill__Order_Id__2B3F6F97" FromRole="Food_Order" ToRole="Bill" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Food_Orde__Cus_I__276EDEB3" FromRole="Food_Order" ToRole="Customer" />
+          <NavigationProperty Name="Item" Relationship="Self.FK__Food_Orde__Item___286302EC" FromRole="Food_Order" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Item_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Unit_Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Picture" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Food_Order" Relationship="Self.FK__Food_Orde__Item___286302EC" FromRole="Item" ToRole="Food_Order" />
+        </EntityType>
+        <Association Name="FK__Bill__Order_Id__2B3F6F97">
+          <End Role="Food_Order" Type="Self.Food_Order" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food_Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Order_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Food_Orde__Cus_I__276EDEB3">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Food_Order" Type="Self.Food_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Food_Order">
+              <PropertyRef Name="Cus_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Food_Orde__Item___286302EC">
+          <End Role="Item" Type="Self.Item" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Food_Order" Type="Self.Food_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Food_Order">
+              <PropertyRef Name="Item_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MVC_RestaurantEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bills" EntityType="Self.Bill" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Food_Order" EntityType="Self.Food_Order" />
+          <EntitySet Name="Items" EntityType="Self.Item" />
+          <AssociationSet Name="FK__Bill__Order_Id__2B3F6F97" Association="Self.FK__Bill__Order_Id__2B3F6F97">
+            <End Role="Food_Order" EntitySet="Food_Order" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Food_Orde__Cus_I__276EDEB3" Association="Self.FK__Food_Orde__Cus_I__276EDEB3">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Food_Order" EntitySet="Food_Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Food_Orde__Item___286302EC" Association="Self.FK__Food_Orde__Item___286302EC">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="Food_Order" EntitySet="Food_Order" />
+          </AssociationSet>
+          <FunctionImport Name="Sp_ins_order">
+            <Parameter Name="CusId" Mode="In" Type="Int32" />
+            <Parameter Name="ItemId" Mode="In" Type="Int32" />
+            <Parameter Name="Quantity" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_insBill">
+            <Parameter Name="ordId" Mode="In" Type="Int32" />
+            <Parameter Name="PayMath" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MVC_RestaurantModelStoreContainer" CdmEntityContainer="MVC_RestaurantEntities">
+          <EntitySetMapping Name="Bills">
+            <EntityTypeMapping TypeName="MVC_RestaurantModel.Bill">
+              <MappingFragment StoreEntitySet="Bill">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Order_Id" ColumnName="Order_Id" />
+                <ScalarProperty Name="Total_Price" ColumnName="Total_Price" />
+                <ScalarProperty Name="Payment_Method" ColumnName="Payment_Method" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="MVC_RestaurantModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Cus_Name" ColumnName="Cus_Name" />
+                <ScalarProperty Name="Cus_Address" ColumnName="Cus_Address" />
+                <ScalarProperty Name="Cus_Contact_NO" ColumnName="Cus_Contact_NO" />
+                <ScalarProperty Name="Cus_Email" ColumnName="Cus_Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Food_Order">
+            <EntityTypeMapping TypeName="MVC_RestaurantModel.Food_Order">
+              <MappingFragment StoreEntitySet="Food_Order">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Cus_Id" ColumnName="Cus_Id" />
+                <ScalarProperty Name="Item_Id" ColumnName="Item_Id" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Total_Price" ColumnName="Total_Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="MVC_RestaurantModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />
+                <ScalarProperty Name="Unit_Price" ColumnName="Unit_Price" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Sp_ins_order" FunctionName="MVC_RestaurantModel.Store.Sp_ins_order" />
+          <FunctionImportMapping FunctionImportName="Sp_insBill" FunctionName="MVC_RestaurantModel.Store.Sp_insBill" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

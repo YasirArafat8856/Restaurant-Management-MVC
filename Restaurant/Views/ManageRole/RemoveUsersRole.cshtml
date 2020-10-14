@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "RemoveUsersRole";
+}
+
+<h2>RemoveUsersRole</h2>
+@if (ViewBag.result != null)
+{
+    <div class="alert-danger">
+        @ViewBag.result
+    </div>
+}
+@using (Html.BeginForm())
+{
+
+    <div>
+        <label>User</label>
+        <div>
+            @Html.DropDownList("Userlist", @ViewBag.Userlist as SelectList, "Select User")
+        </div>
+    </div>
+    <div>
+        <label>Role</label>
+        <div>
+            @Html.DropDownList("RoleList", @ViewBag.RoleList as SelectList, "Select Role")
+        </div>
+    </div>
+    <div>
+        <input type="submit" value="Remove" class="btn btn-primary" />
+    </div>
+}

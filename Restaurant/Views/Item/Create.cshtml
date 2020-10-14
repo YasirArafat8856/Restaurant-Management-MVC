@@ -1,0 +1,39 @@
+﻿@model Restaurant.ViewModel.ItemVm
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+@using (Html.BeginForm("Create", "Item", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row container">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label class="form-inline">Item Name</label>
+                <div>
+                    @Html.EditorFor(i => Model.Item_Name, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label class="form-inline">Price :</label>
+                    <div>
+                        @Html.EditorFor(i => Model.Unit_Price, new { @class = "form-control" })
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="form-inline" for="ImgFile">Photo :</label>
+
+                    <div>
+                        <input type="file" id="ImgFile" name="ImgFile" class="form-control" />
+                    </div>
+                </div>
+                <div class="btn btn-primary">
+                    <input type="submit" value="Save" style="color:black" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

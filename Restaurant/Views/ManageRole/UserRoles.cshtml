@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "UserRoles";
+}
+
+<h2>UserRoles</h2>
+@if (ViewBag.result != null)
+{
+    <div class="alert-danger">
+        @ViewBag.result
+    </div>
+}
+@using (Html.BeginForm())
+{
+    <div>
+        <label>User</label>
+        <div>
+            @Html.DropDownList("Userlist", @ViewBag.Userlist as SelectList, "Select User")
+        </div>
+    </div>
+
+    <div>
+        <input type="submit" value="Get Role" />
+    </div>
+}
+<div>
+    <label>
+        Role Name
+    </label>
+   
+    @if (ViewBag.roles != null)
+    {
+        @Html.DropDownList("roles", null, "select ")
+    }
+
+</div>

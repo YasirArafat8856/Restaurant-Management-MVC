@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNet.Identity.EntityFramework
+@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+@{
+    ViewBag.Title = "Index";
+}
+@Html.ActionLink("Create", "Create", "ManageRole")
+<h2>All Roles</h2>
+<table class="table table-bordered" style="background-image: url('../../Photo/download.jpg'); background-repeat:no-repeat; background-size: cover;">
+    <tr>
+        <th>Id</th>
+        <th>
+            Name
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Id
+            </td>
+            <td>
+                @item.Name
+            </td>
+            @*<td>
+                @Html.ActionLink("Edit", "Edit", "ManageRole", new { id = item.Id }, null)
+                
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", "ManageRole", new { id = item.Id }, null)
+            </td>*@
+        </tr>
+    }
+</table>

@@ -1,0 +1,42 @@
+﻿@model Restaurant.Models.Bill
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Bill</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Total_Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total_Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Payment_Method)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Payment_Method)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Food_Order.ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Food_Order.ID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

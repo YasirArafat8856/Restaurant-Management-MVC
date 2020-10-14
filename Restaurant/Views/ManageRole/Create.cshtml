@@ -1,0 +1,22 @@
+﻿@model Restaurant.ViewModel.RoleVm
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create Role</h2>
+@if (ViewBag.result != null)
+{
+    <div>
+        @ViewBag.result
+    </div>
+}
+@using (Html.BeginForm())
+{
+    <div>
+        <label>Name</label>
+        @Html.EditorFor(m=>m.Name)
+    </div>
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+}

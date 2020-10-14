@@ -1,0 +1,68 @@
+﻿@model  PagedList.IPagedList<Restaurant.Models.Item>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "AllItem";
+}
+<h2>All Items</h2>
+
+@using (Html.BeginForm("Index", "Item", FormMethod.Get))
+{
+    <p>
+        Search by  Name:@Html.TextBox("searchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+<table class="table table-bordered text-center" style=" background-image: url('../../Photo/item.jpg'); background-repeat: no-repeat;background-size: cover;">
+    <tr>
+        <th>
+
+            @Html.ActionLink("Name", "Index", "Item", new { sortOrder = ViewBag.NameSortParam, currentFilter = ViewBag.CurrentFilter }, null)
+        </th>
+        <th>
+
+            @Html.ActionLink("Unit Price", "Index", "Item", new { sortOrder = ViewBag.AddressSortParam, currentFilter = ViewBag.CurrentFilter }, null)
+        </th>
+        <th>
+            Picture
+        </th>
+
+        
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Item_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unit_Price)
+            </td>
+            <td>
+                @if (item.Picture != null)
+                {
+                    <img src="@Url.Content(item.Picture)" height="100" width="150" />
+                }
+
+            </td>
+
+            
+        </tr>
+    }
+
+</table>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    sortOrder = ViewBag.CurrentSort,
+    currentFilter = ViewBag.CurrentFilter
+}))
+
+
+
+

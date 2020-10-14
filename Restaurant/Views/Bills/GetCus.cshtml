@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Restaurant.Models.Bill>
+
+@*<p>
+    @Html.ActionLink(" Create New Customer", "Create","Bills",new {@class="glyphicon glyphicon-plus-sign" })
+</p>*@
+<a id="Create">
+    <span class="glyphicon glyphicon-plus-sign">Add</span>
+</a>
+<table class="table" style="background-image: url('../../Photo/cash.jpg'); background-repeat: no-repeat; background-size: cover; ">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Total_Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Payment_Method)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Food_Order.ID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total_Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Payment_Method)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Food_Order.ID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

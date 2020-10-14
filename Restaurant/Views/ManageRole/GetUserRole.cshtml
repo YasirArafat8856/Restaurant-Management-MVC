@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Restaurant.ViewModel.UsersRole>
+@{
+    ViewBag.Title = "GetUserRole";
+    
+}
+
+<h2>GetUserRole</h2>
+@if (ViewBag.result != null)
+{
+    @ViewBag.result
+}
+<table class="table" style="background-image: url('../../Photo/download.jpg'); background-repeat:no-repeat; background-size: cover;" >
+    <tr>
+        <th>User Name</th>
+        <th>Role Name</th>
+    </tr>
+    @foreach(var i in Model)
+    {
+        <tr>
+            <td>@i.UserName</td>
+            <td>@i.RoleName</td>
+        </tr>
+
+    }
+</table>
+

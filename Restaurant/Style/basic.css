@@ -1,0 +1,6 @@
+﻿body {
+    background-image: url('../Photo/back2.jpg');
+    /*background-image: url('../Photo/KachiVhai.jpg');*/
+    background-repeat: no-repeat;
+    background-size: cover;
+}
